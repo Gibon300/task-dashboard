@@ -1,9 +1,15 @@
 import http from "http";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { URL } from "url";
 
-const PORT = 3001;
-const DB_PATH = "./db.json";
+const PORT = Number(process.env.PORT) || 3001;
+
+// абсолютный путь к db.json (чтобы работало везде)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DB_PATH = path.join(__dirname, "db.json");
 
 /* =======================
    Utils
@@ -37,7 +43,6 @@ function sendJson(res, status, data) {
 }
 
 function makeId(prefix = "id") {
-  // простой уникальный id для учебного проекта
   return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
@@ -71,7 +76,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // GET /projects/:id   (id = string, например "p1")
+    // GET /projects/:id
     if (req.method === "GET" && url.pathname.startsWith("/projects/")) {
       const id = url.pathname.split("/")[2];
       const db = readDb();
@@ -88,7 +93,6 @@ const server = http.createServer(async (req, res) => {
     }
 
     // POST /projects
-    // body: { name: string, id?: string, createdAt?: string }
     if (req.method === "POST" && url.pathname === "/projects") {
       const body = await readBody(req);
       const db = readDb();
@@ -113,6 +117,28 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    // DELETE /projects/:id (c cascade)
+    if (req.method === "DELETE" && url.pathname.startsWith("/projects/")) {
+      const id = url.pathname.split("/")[2];
+      const db = readDb();
+
+      const beforeProjects = (db.projects ?? []).length;
+      db.projects = (db.projects ?? []).filter((p) => String(p.id) !== id);
+
+      if (db.projects.length === beforeProjects) {
+        sendJson(res, 404, { message: "Project not found" });
+        return;
+      }
+
+      db.tasks = (db.tasks ?? []).filter((t) => String(t.projectId) !== id);
+
+      writeDb(db);
+
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
     /* =======================
        TASKS
     ======================= */
@@ -130,7 +156,6 @@ const server = http.createServer(async (req, res) => {
     }
 
     // POST /tasks
-    // body: { projectId: string, title: string, status?: "todo"|"in_progress"|"done", id?: string }
     if (req.method === "POST" && url.pathname === "/tasks") {
       const body = await readBody(req);
       const db = readDb();
@@ -167,7 +192,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // DELETE /tasks/:id  (id = string, uuid тоже ок)
+    // DELETE /tasks/:id
     if (req.method === "DELETE" && url.pathname.startsWith("/tasks/")) {
       const id = url.pathname.split("/")[2];
       const db = readDb();
@@ -189,32 +214,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // DELETE /projects/:id  (id = string)
-if (req.method === "DELETE" && url.pathname.startsWith("/projects/")) {
-  const id = url.pathname.split("/")[2];
-  const db = readDb();
-
-  const beforeProjects = (db.projects ?? []).length;
-  db.projects = (db.projects ?? []).filter((p) => String(p.id) !== id);
-
-  if (db.projects.length === beforeProjects) {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Project not found" }));
-    return;
-  }
-
-  // каскад: удаляем задачи проекта
-  db.tasks = (db.tasks ?? []).filter((t) => String(t.projectId) !== id);
-
-  writeDb(db);
-
-  res.writeHead(204);
-  res.end();
-  return;
-}
-
-
-    // PATCH /tasks/:id  (частичное обновление, обычно status/title)
+    // PATCH /tasks/:id
     if (req.method === "PATCH" && url.pathname.startsWith("/tasks/")) {
       const id = url.pathname.split("/")[2];
       const body = await readBody(req);
@@ -228,7 +228,6 @@ if (req.method === "DELETE" && url.pathname.startsWith("/projects/")) {
         return;
       }
 
-      // разрешаем менять только известные поля
       if (typeof body.title === "string") task.title = body.title.trim();
       if (typeof body.status === "string") {
         if (!["todo", "in_progress", "done"].includes(body.status)) {
@@ -249,11 +248,10 @@ if (req.method === "DELETE" && url.pathname.startsWith("/projects/")) {
 
     sendJson(res, 404, { message: "Not found" });
   } catch (e) {
-    // JSON parse error / unexpected error
     sendJson(res, 500, { message: "Server error" });
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`🚀 Mock API running on http://localhost:${PORT}`);
+  console.log(`🚀 Mock API running on port ${PORT}`);
 });
