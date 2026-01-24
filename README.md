@@ -1,93 +1,94 @@
 # Task Dashboard
 
-Небольшой pet‑project — таск‑менеджер с проектами и задачами. Проект сделан для практики React, TypeScript, работы с API и базовой архитектуры фронтенда.
+Веб-приложение для управления проектами и задачами.  
+Проект выполнен как pet-project для портфолио и демонстрирует навыки работы с React, TypeScript, API и архитектурой frontend-приложений.
 
-Возможности
+## Демо
 
-*  Список проектов
-*  Создание и удаление проектов
-*  Задачи внутри проекта
-*  Добавление задач
-*  Удаление задач
-*  Изменение статуса задачи (`todo / in_progress / done`)
-*  Фильтрация задач по статусу
-*  Mock API (json-server)
-*  Tailwind CSS
+- **Frontend (Vercel):** https://task-dashboard-three-rust.vercel.app/
+- **API (Render):** https://task-dashboard-l39p.onrender.com/projects
 
-## Технологии
+## Стек технологий
 
-* **React**
-* **TypeScript**
-* **Vite**
-* **Tailwind CSS**
-* **json-server** (mock API)
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- TanStack Query (React Query)
 
-Структура проекта
+### Backend (mock API)
+- Node.js (native `http` module)
+- JSON-файл как хранилище данных
+- Деплой на Render
 
-```
-src/
- ├─ pages/            # Страницы (Projects, ProjectDetails)
- ├─ entities/         # Бизнес-сущности (project, task)
- │   ├─ api/
- │   ├─ model/
- │   └─ ui/
- ├─ shared/           # Общие утилиты / компоненты
- ├─ App.tsx
- ├─ main.tsx
- └─ index.css         # Tailwind
-```
+## Функциональность
 
- Установка и запуск
+### Проекты
+- Просмотр списка проектов
+- Создание и удаление проектов
+- Переход на страницу проекта
 
- 1. Клонировать репозиторий
+### Задачи
+- Загрузка задач по `projectId`
+- Добавление и удаление задач
+- Изменение статуса задачи (`todo`, `in_progress`, `done`)
+- Обработка состояний загрузки и ошибок
 
-```bash
-git clone https://github.com/USERNAME/task-dashboard.git
+### UI / UX
+- Минималистичная верстка
+- Управление серверным состоянием через React Query
+- Блокировка действий во время запросов
+- Базовая обработка ошибок
+
+## Архитектура
+
+Проект построен без избыточных абстракций, с упором на читаемость и масштабируемость.
+
+- **`entities/`** — доменная логика (projects, tasks)
+  - API-слой
+  - Типы и модели
+- **`pages/`** — страницы приложения
+  - Список проектов
+  - Детали проекта
+- **`shared/`**
+  - Общие утилиты и HTTP-клиент (`http.ts`)
+
+Базовый URL API настраивается через переменную окружения `VITE_API_URL`.
+
+## Переменные окружения
+
+### Локальный запуск
+
+Создайте файл `.env` в корне проекта:
+
+```env
+VITE_API_URL=http://localhost:3001
+Продакшн
+В продакшене переменная VITE_API_URL задаётся в настройках проекта на Vercel и указывает на задеплоенный API.
+
+Запуск проекта локально
+1. Клонировать репозиторий
+git clone https://github.com/Gibon300/task-dashboard.git
 cd task-dashboard
-```
-
- 2. Установить зависимости
-
-```bash
+2. Установить зависимости
 npm install
-```
-
- 3. Запустить mock API
-
-```bash
-npm run mock
-```
-
-Mock API будет доступен на:
-
-```
-http://localhost:3001
-```
-
- 4. Запустить фронтенд
-
-```bash
+3. Запустить mock API
+npm run api
+4. Запустить frontend
 npm run dev
-```
+Приложение будет доступно по адресу http://localhost:5173.
 
-Открыть в браузере:
+Примечания
+Backend реализован как mock API и предназначен для демонстрационных целей.
 
-```
-http://localhost:5173
-```
+На бесплатном тарифе Render сервер может «засыпать», поэтому первый запрос иногда занимает несколько секунд.
 
- API эндпоинты
+Проект ориентирован на демонстрацию архитектуры и работы с состояниями, а не сложного UI.
 
-Projects
+Автор
+Дмитрий Пузачев
+Frontend Developer (React / TypeScript)
 
-* `GET /projects`
-* `POST /projects`
-* `DELETE /projects/:id`
-
-Tasks
-
-* `GET /tasks?projectId=...`
-* `POST /tasks`
-* `PATCH /tasks/:id`
-* `DELETE /tasks/:id`
-
+GitHub: https://github.com/Gibon300
