@@ -1,0 +1,41 @@
+{
+  "projects": [
+    {
+      "id": "p1",
+      "name": "Personal",
+      "createdAt": "2026-01-22T00:00:00.000Z"
+    },
+    {
+      "id": "p-1769200486101-bdbf24eeca489",
+      "name": "Play Dota",
+      "createdAt": "2026-01-23T20:34:46.101Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "projectId": "p1",
+      "title": "First task",
+      "status": "done",
+      "createdAt": "2026-01-22T00:00:00.000Z"
+    },
+    {
+      "id": "t-1769204456375-df5544f3010f2",
+      "projectId": "p-1769200486101-bdbf24eeca489",
+      "title": "Play dota 2 with ыхыхыхы",
+      "status": "todo"
+    },
+    {
+      "id": "t-1769204477584-8fbac3332c678",
+      "projectId": "p-1769200486101-bdbf24eeca489",
+      "title": "Play dota 2 with Ищу кунчика",
+      "status": "in_progress"
+    },
+    {
+      "id": "t-1769204643961-0258e6a56e926",
+      "projectId": "p-1769200486101-bdbf24eeca489",
+      "title": "lose with Adept",
+      "status": "done"
+    }
+  ]
+}
