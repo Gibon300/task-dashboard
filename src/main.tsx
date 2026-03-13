@@ -24,16 +24,17 @@ if (!existingBtn) {
   const btn = document.createElement("a");
   btn.id = aiBtnId;
   btn.className = "ai-btn";
-  btn.href = "https://t.me/your_username";
+  btn.href = "#";
   btn.target = "_blank";
   btn.rel = "noreferrer";
-  btn.textContent = "Contact via Telegram";
+  btn.textContent = "Contact";
   document.body.appendChild(btn);
 } else {
-  existingBtn.setAttribute("href", "https://t.me/your_username");
-  existingBtn.textContent = "Contact via Telegram";
+  existingBtn.setAttribute("href", "#");
+  existingBtn.textContent = "Contact";
 }
 // --- end inject ---
+
 
 
 
