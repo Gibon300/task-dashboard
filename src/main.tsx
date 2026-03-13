@@ -16,3 +16,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </React.StrictMode>
 );
+
+// --- AI Admin Agent: inject contact button ---
+const aiBtnId = "ai-telegram-btn";
+if (!document.getElementById(aiBtnId)) {
+  const btn = document.createElement("a");
+  btn.id = aiBtnId;
+  btn.className = "ai-btn";
+  btn.href = "https://t.me/your_username";
+  btn.target = "_blank";
+  btn.rel = "noreferrer";
+  btn.textContent = "Contact via Telegram";
+  document.body.appendChild(btn);
+}
+// --- end inject ---

@@ -1,3 +1,5 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ai-btn { position: fixed; right: 24px; bottom: 24px; padding: 12px 18px; background:#0088cc; color:#fff; text-decoration:none; border-radius:8px; font-weight:600; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
