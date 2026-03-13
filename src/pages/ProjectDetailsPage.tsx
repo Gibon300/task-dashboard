@@ -125,7 +125,7 @@ export function ProjectDetailsPage() {
   }
 
   return (
-  <div className="min-h-screen bg-slate-50 text-slate-900">
+  <div className="min-h-screen bg-[#800080] text-slate-900">
     <div className="mx-auto max-w-4xl p-6">
       <div className="flex items-center justify-between">
         <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100" to="/">
@@ -208,7 +208,7 @@ export function ProjectDetailsPage() {
         </ul>
 
         {!loadingTasks && !tasksError && tasks.length === 0 && (
-          <div className="mt-6 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-600">
+          <div className="mt-6 rounded-xl border border-dashed border-slate-300 bg-[#800080] p-4 text-sm text-slate-600">
             No tasks yet. Add the first one above 👆
           </div>
         )}

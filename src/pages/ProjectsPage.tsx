@@ -22,7 +22,7 @@ export function ProjectsPage() {
 
   if (loading) {
   return (
-    <div className="min-h-screen bg-slate-50 p-6 text-slate-900">
+    <div className="min-h-screen bg-[#800080] p-6 text-slate-900">
       <div className="mx-auto max-w-3xl">
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
           Loading...
@@ -34,7 +34,7 @@ export function ProjectsPage() {
 
 if (error) {
   return (
-    <div className="min-h-screen bg-slate-50 p-6 text-slate-900">
+    <div className="min-h-screen bg-[#800080] p-6 text-slate-900">
       <div className="mx-auto max-w-3xl">
         <div className="rounded-xl border border-red-200 bg-white p-6 text-red-700 shadow-sm">
           {error}
@@ -72,7 +72,7 @@ async function handleDeleteProject(id: string) {
 
 
   return (
-  <div className="min-h-screen bg-slate-50 text-slate-900">
+  <div className="min-h-screen bg-[#800080] text-slate-900">
     <div className="mx-auto max-w-3xl p-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Projects</h1>
